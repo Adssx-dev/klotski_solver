@@ -1,6 +1,7 @@
 use crate::piece::Piece;
 use crate::board_2d::Board2D;
 
+#[derive(Debug)]
 pub struct Board {
     pub width : usize,
     pub height : usize,
