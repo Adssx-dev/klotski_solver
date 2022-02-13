@@ -25,6 +25,7 @@ impl Board2D {
 
             for i in piece.x_pos..(piece.x_pos + piece.width) {
                 for j in piece.y_pos..(piece.y_pos + piece.height) {
+                    assert!(self.board[j * self.width + i] == '.', "Two pieces are at the same place. Piece trying to be placed : {:?}, marker already at this place : {}", piece, self.board[j * self.width + i]);
                     self.board[j * self.width + i] = piece.marker;
                 }
             }
