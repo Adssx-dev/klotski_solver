@@ -1,5 +1,3 @@
-use std::os::windows::prelude::OsStrExt;
-
 use crate::piece::Piece;
 
 // Used to construct the "visual" board in 2D based on pieces positions and sizes
@@ -22,8 +20,8 @@ impl Board2D {
 
     fn fill_board(&mut self, pieces : &Vec<Piece>) {
         for piece in pieces {
-            assert!(piece.x_pos + piece.width < self.width, "Piece getting over the edge horizontally. Piece : {:?}", piece);
-            assert!(piece.y_pos + piece.height < self.height, "Piece getting over the edge vertically. Piece : {:?}", piece);
+            assert!(piece.x_pos + piece.width - 1 < self.width, "Piece getting over the edge horizontally. Piece : {:?}", piece);
+            assert!(piece.y_pos + piece.height - 1< self.height, "Piece getting over the edge vertically. Piece : {:?}", piece);
 
             for i in piece.x_pos..(piece.x_pos + piece.width) {
                 for j in piece.y_pos..(piece.y_pos + piece.height) {
