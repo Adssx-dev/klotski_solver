@@ -25,8 +25,8 @@ impl Board2D {
             assert!(piece.x_pos + piece.width < self.width, "Piece getting over the edge horizontally. Piece : {:?}", piece);
             assert!(piece.y_pos + piece.height < self.height, "Piece getting over the edge vertically. Piece : {:?}", piece);
 
-            for i in piece.x_pos..(piece.x_pos + piece.width - 1) {
-                for j in piece.y_pos..(piece.y_pos + piece.height - 1) {
+            for i in piece.x_pos..(piece.x_pos + piece.width) {
+                for j in piece.y_pos..(piece.y_pos + piece.height) {
                     self.board[j * self.width + i] = piece.marker;
                 }
             }
@@ -34,11 +34,11 @@ impl Board2D {
     }
 
     pub fn print(&self) {
-        for i in 1..self.board.len() {
-            print!("{}", self.board[i]);
+        for i in 0..self.board.len() {
             if i % self.width == 0 {
                 println!("");
             }
+            print!("{}", self.board[i]);
         }
     }
 
