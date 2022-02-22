@@ -7,15 +7,15 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug executable 'AneRouge'",
+            "name": "Debug executable 'klotski'",
             "cargo": {
                 "args": [
                     "build",
-                    "--bin=AneRouge",
-                    "--package=AneRouge"
+                    "--bin=klotski",
+                    "--package=klotski"
                 ],
                 "filter": {
-                    "name": "AneRouge",
+                    "name": "klotski",
                     "kind": "bin"
                 }
             },
@@ -25,16 +25,16 @@
         {
             "type": "lldb",
             "request": "launch",
-            "name": "Debug unit tests in executable 'AneRouge'",
+            "name": "Debug unit tests in executable 'klotski'",
             "cargo": {
                 "args": [
                     "test",
                     "--no-run",
-                    "--bin=AneRouge",
-                    "--package=AneRouge"
+                    "--bin=klotski",
+                    "--package=klotski"
                 ],
                 "filter": {
-                    "name": "AneRouge",
+                    "name": "klotski",
                     "kind": "bin"
                 }
             },
