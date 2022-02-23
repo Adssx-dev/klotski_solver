@@ -1,23 +1,10 @@
-use crate::{piece::Piece};
+use crate::{piece::Piece, direction::Direction, movement::Movement};
 
 const EMPTY_CELL_CHAR : char = '.';
 
-#[derive(Debug)]
-pub enum Direction {
-    Up,
-    Down,
-    Left,
-    Right
-}
-
-#[derive(Debug)]
-pub struct Movement {
-    pub piece_id : usize,
-    pub direction : Direction
-}
 
 // Used to construct the "visual" board in 2D based on pieces positions and sizes
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Board2D {
     width : usize,
     height : usize,
@@ -148,6 +135,8 @@ impl Board2D {
         self.board[y * self.width + x] = value;
     }
 
-    
+    pub fn get_board_identifier(&self) -> String {
+        self.board.clone().into_iter().collect()
+    }
 
 }
