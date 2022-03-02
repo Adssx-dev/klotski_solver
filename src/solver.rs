@@ -5,15 +5,27 @@ use std::thread::current;
 use crate::board::Board;
 use crate::movement::Movement;
 
+/// Represents the state of the board at an instant
 struct State {
+    /// String used as an ID to get the parent of this state to reconstruct the path to solution when it is found
     pub parent : String,
+
+    ///Complete board (pieces, etc.) at the current state
     pub board : Board,
 }
 
 pub struct Solver {
-    states : HashMap<String, State>, // tree of states
-    candidates : Vec<String>, // possible values for next iteration
-    solution_state : Option<String> // If the (unoptimised) solution is found, it is stored here to stop searching for worse solutions
+    /// HashMap used as a tree for states.
+    /// 
+    /// Each node has a string as key, and the value contains the key to the parent, 
+    /// thus is can be seen as a tree
+    states : HashMap<String, State>, 
+
+    /// Possible values for next solving iteration
+    candidates : Vec<String>, 
+
+    /// If the (possibily unoptimised) solution is found, it is stored here to stop searching for worse solutions
+    solution_state : Option<String>
 }
 
 impl Solver {
@@ -33,6 +45,7 @@ impl Solver {
         s
     }
 
+    /// Solves the board given in the constructor
     pub fn solve(&mut self) -> Vec<Board> {
 
         while self.solution_state.is_none() {
@@ -55,6 +68,8 @@ impl Solver {
         solution
     }
 
+    /// Generates all possible moves for next candidate, generate the associated children
+    /// and adds them to the candidate list
     fn check_next_candidate(&mut self) {
         let candidate = self.get_best_candidate();
 
@@ -91,13 +106,16 @@ impl Solver {
         }
     }
 
+    /// Removes the candidates for which the depth is greater than the knows solution (if there is one)
+    /// 
+    /// These candidates are not worth investigating as they would generate only worse solutions
     fn clear_bad_candidates(&mut self) {
         if let Some(solution) = &self.solution_state {
             // depth of the known solution, no need to investigate candidates with a worse depth
             let max_depth = self.get_state_depth(solution); 
             
             let mut i : usize= 0;
-            while(i < self.candidates.len()) {
+            while i < self.candidates.len() {
                 if self.get_state_depth(&self.candidates[i]) >= max_depth {
                     self.candidates.remove(i);
                 }
@@ -109,6 +127,9 @@ impl Solver {
         }
     }
 
+    /// Gets the best candidate for next iteration
+    /// 
+    /// The best candidate is the one with the greatest value for its heuristic
     fn get_best_candidate(&mut self) -> String {
         let list : Vec<u32> = self.candidates.iter().map(|c | self.states.get(c).unwrap().board.solved_heuristic()).collect();
         let max = list.iter().max().unwrap();
@@ -116,9 +137,13 @@ impl Solver {
         self.candidates.remove(index)
     }
 
+    /// Calculates the depth of the state given by the ID passed as argument
+    /// 
+    /// This function goes through each parent, parent of parent, etc.
+    /// It takes more time the deeper the element in the tree
     fn get_state_depth (&self, state_key : &str) -> Option<u32> {
         let mut depth = 0;
-        let mut current_state = self.get_parent_key(state_key);
+        let current_state = self.get_parent_key(state_key);
         match current_state {
             None => None,
             Some(state) => {
@@ -132,6 +157,7 @@ impl Solver {
         }
     }
 
+    /// Get the key to the parent of the element associated with the given key
     fn get_parent_key(&self, state_key : &str) -> Option<&str> {
         let key = self.states.get(state_key);
         match key {
@@ -139,7 +165,4 @@ impl Solver {
             Some(v) => Some(v.parent.as_str())
         }        
     }
-
-
-    
 }

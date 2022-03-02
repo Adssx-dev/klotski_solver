@@ -41,10 +41,4 @@ fn main() {
         io::stdin().read_line(&mut discard);
     }
 
-
-    // let board2d = b.get_2d_board();
-    // let possible_movements = b.get_all_possible_movements();
-    // board2d.print();
-    // println!("\r\n");
-    // println!("{:?}", possible_movements);
 }
