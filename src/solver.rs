@@ -1,9 +1,6 @@
 use std::collections::HashMap;
-use std::string;
-use std::thread::current;
 
 use crate::board::Board;
-use crate::movement::Movement;
 
 /// Represents the state of the board at an instant
 struct State {

@@ -34,11 +34,11 @@ fn main() {
 
     let mut s = Solver::new(b);
     let mut result_board = s.solve();
-    let mut discard = String::new();
-
+    let mut _discard = String::new();
+    let stdin = io::stdin();
     while let Some(v) = result_board.pop() {
         v.get_2d_board().print();
-        io::stdin().read_line(&mut discard);
+        let _r = stdin.read_line(&mut _discard);
     }
 
 }
