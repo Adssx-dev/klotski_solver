@@ -6,7 +6,7 @@ pub mod solver;
 pub mod direction;
 pub mod movement;
 
-use std::result;
+use std::io;
 
 use crate::board::Board;
 use crate::piece::Piece;
@@ -33,8 +33,15 @@ fn main() {
     let b : Board = Board::new(4, 5, &pieces);
 
     let mut s = Solver::new(b);
-    let result_board = s.solve();
-    result_board.get_2d_board().print();
+    let mut result_board = s.solve();
+    let mut discard = String::new();
+
+    while let Some(v) = result_board.pop() {
+        v.get_2d_board().print();
+        io::stdin().read_line(&mut discard);
+    }
+
+
     // let board2d = b.get_2d_board();
     // let possible_movements = b.get_all_possible_movements();
     // board2d.print();

@@ -33,14 +33,26 @@ impl Solver {
         s
     }
 
-    pub fn solve(&mut self) -> &Board {
+    pub fn solve(&mut self) -> Vec<Board> {
 
         while self.solution_state.is_none() {
             self.clear_bad_candidates();
             self.check_next_candidate();
         }
-        let t = self.solution_state.clone().unwrap().clone();
-        &self.states.get(&t).unwrap().board
+        let mut solution : Vec<Board> = Vec::new();
+
+        let mut t = self.solution_state.clone();
+
+        while let Some(state) = t {
+            let node = self.states.get(&state).unwrap();
+            solution.push(node.board.clone());
+            t = match node.parent.clone().as_str() {
+                "" => None,
+                _ => Some(node.parent.clone())
+            };
+            
+        }
+        solution
     }
 
     fn check_next_candidate(&mut self) {
