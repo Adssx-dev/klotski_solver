@@ -2,7 +2,7 @@ use crate::piece::Piece;
 use crate::board_2d::{Board2D};
 use crate::movement::Movement;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Board {
     width : usize,
     height : usize,
@@ -34,6 +34,16 @@ impl Board {
 
     pub fn get_all_possible_movements(&self) -> Vec<Movement> {
         self.get_2d_board().get_all_possible_movements(&self.pieces)
+    }
+
+    pub fn solved_heuristic(&self) -> u32 {
+        // The further it is , the closer we are to the solution
+        self.pieces.first().unwrap().y_pos as u32
+    }
+
+    pub fn is_solved(&self) -> bool {
+        // The further it is , the closer we are to the solution
+        self.pieces.first().unwrap().y_pos  == 3 && self.pieces.first().unwrap().x_pos  == 1
     }
 
     fn update_2d_board(&mut self) {

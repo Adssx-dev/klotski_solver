@@ -34,5 +34,14 @@ impl Piece {
         };
         self.move_piece_coordinates(x, y);
     }
+
+    pub fn get_x_pos(&self) -> usize {
+        self.x_pos
+    }
+    
+
+    pub fn get_y_pos(&self) -> usize {
+        self.y_pos
+    }
 }
 

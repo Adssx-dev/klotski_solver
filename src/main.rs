@@ -6,6 +6,8 @@ pub mod solver;
 pub mod direction;
 pub mod movement;
 
+use std::result;
+
 use crate::board::Board;
 use crate::piece::Piece;
 use crate::solver::Solver;
@@ -14,25 +16,28 @@ fn main() {
 
     let mut pieces : Vec<Piece>= Vec::new();
     // Big square
-    pieces.push(Piece::new(1, 0, 2, 2, '0'));
+    pieces.push(Piece::new(1, 0, 2, 2, 'G'));
     // All vertical pieces
-    pieces.push(Piece::new(0, 0, 1, 2, '1'));
-    pieces.push(Piece::new(3, 0, 1, 2, '2'));
-    pieces.push(Piece::new(0, 3, 1, 2, '3'));
-    pieces.push(Piece::new(3, 3, 1, 2, '4'));
+    pieces.push(Piece::new(0, 0, 1, 2, 'V'));
+    pieces.push(Piece::new(3, 0, 1, 2, 'V'));
+    pieces.push(Piece::new(0, 3, 1, 2, 'V'));
+    pieces.push(Piece::new(3, 3, 1, 2, 'V'));
     // Horizontal piece
-    pieces.push(Piece::new(1, 2, 2, 1, '5'));
+    pieces.push(Piece::new(1, 2, 2, 1, 'H'));
     // Small squares
-    pieces.push(Piece::new(1, 3, 1, 1, '6'));
-    pieces.push(Piece::new(2, 3, 1, 1, '7'));
-    pieces.push(Piece::new(1, 4, 1, 1, '8'));
-    pieces.push(Piece::new(2, 4, 1, 1, '9'));
+    pieces.push(Piece::new(1, 3, 1, 1, 'S'));
+    pieces.push(Piece::new(2, 3, 1, 1, 'S'));
+    pieces.push(Piece::new(1, 4, 1, 1, 'S'));
+    pieces.push(Piece::new(2, 4, 1, 1, 'S'));
 
-    let mut b : Board = Board::new(4, 5, &pieces);
+    let b : Board = Board::new(4, 5, &pieces);
 
-    let board2d = b.get_2d_board();
-    let possible_movements = b.get_all_possible_movements();
-    board2d.print();
-    println!("\r\n");
-    println!("{:?}", possible_movements);
+    let mut s = Solver::new(b);
+    let result_board = s.solve();
+    result_board.get_2d_board().print();
+    // let board2d = b.get_2d_board();
+    // let possible_movements = b.get_all_possible_movements();
+    // board2d.print();
+    // println!("\r\n");
+    // println!("{:?}", possible_movements);
 }

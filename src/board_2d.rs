@@ -43,6 +43,7 @@ impl Board2D {
             }
             print!("{}", self.board[i]);
         }
+        println!("");
     }
 
     pub fn get_all_possible_movements(&self, pieces : &Vec<Piece>) -> Vec<Movement> {
